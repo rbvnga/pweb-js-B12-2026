@@ -1,12 +1,173 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Catalog</title>
-    <link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mini Shopee — Katalog Produk</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-        <script src="script.js"></script>
+
+<!-- ============ HEADER (STICKY) ============ -->
+<header class="site-header" id="siteHeader">
+  <div class="header-inner">
+    <a class="brand" href="index.html">
+      <span class="brand-mark">MS</span>
+      <span class="brand-name">Élite <em>Market</em></span>
+    </a>
+
+    <div class="search-box">
+      <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.8"/>
+        <line x1="21" y1="21" x2="16.65" y2="16.65" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+      <input type="text" id="searchInput" placeholder="Cari produk atau kategori..." autocomplete="off">
+      <span class="search-status" id="searchStatus" aria-live="polite"></span>
+    </div>
+
+    <div class="header-actions">
+      <span class="user-greeting" id="userGreeting">Halo, Tamu</span>
+
+      <button class="icon-btn" id="cartBtn" aria-label="Keranjang belanja">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3 4h2l2.2 11.2a2 2 0 0 0 2 1.6h7.6a2 2 0 0 0 2-1.6L21 8H6.2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="10" cy="20.5" r="1.3" fill="currentColor"/>
+          <circle cx="17.5" cy="20.5" r="1.3" fill="currentColor"/>
+        </svg>
+        <span class="cart-badge" id="cartBadge">0</span>
+      </button>
+
+      <button class="logout-btn" id="logoutBtn">Keluar</button>
+    </div>
+  </div>
+
+  <!-- ============ FILTER BAR (STICKY, MENEMPEL DI BAWAH HEADER) ============ -->
+  <div class="filter-bar">
+    <div class="filter-bar-inner">
+      <div class="filter-group">
+        <label for="categoryFilter">Kategori</label>
+        <select id="categoryFilter">
+          <option value="all">Semua Kategori</option>
+        </select>
+      </div>
+      <div class="filter-group">
+        <label for="sortFilter">Urutkan</label>
+        <select id="sortFilter">
+          <option value="default">Paling Relevan</option>
+          <option value="price-asc">Harga: Terendah</option>
+          <option value="price-desc">Harga: Tertinggi</option>
+          <option value="rating-desc">Rating Tertinggi</option>
+        </select>
+      </div>
+      <div class="result-count" id="resultCount">Memuat produk…</div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ CART PANEL (DRAWER) ============ -->
+<div class="cart-overlay" id="cartOverlay"></div>
+<aside class="cart-panel" id="cartPanel">
+  <div class="cart-panel-head">
+    <h3>Keranjang Anda</h3>
+    <button class="cart-close" id="cartClose" aria-label="Tutup keranjang">&times;</button>
+  </div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-panel-footer">
+    <div class="cart-total-row">
+      <span>Total</span>
+      <span id="cartTotal">$0.00</span>
+    </div>
+    <button class="cart-checkout-btn">Checkout</button>
+  </div>
+</aside>
+
+<main>
+
+  <div class="top-grid">
+    <!-- ============ PROMO BANNER ============ -->
+    <section class="promo-banner">
+      <div class="promo-ring"></div>
+      <p class="promo-eyebrow">Koleksi Musim Ini</p>
+      <h1>Belanja lebih elegan,<br>bayar lebih hemat.</h1>
+      <p class="promo-copy">Temukan parfum, kosmetik, hingga furnitur pilihan dengan penawaran istimewa setiap harinya.</p>
+      <a href="#flashSale" class="promo-cta">Lihat Flash Sale</a>
+    </section>
+
+    <!-- ============ SALDO BOX ============ -->
+    <section class="saldo-card">
+      <p class="saldo-label">Saldo Anda</p>
+      <p class="saldo-amount" id="saldoAmount">$0.00</p>
+      <div class="saldo-actions">
+        <button class="saldo-btn">Top Up</button>
+        <button class="saldo-btn saldo-btn--ghost">Riwayat</button>
+      </div>
+      <span class="saldo-card-number">MS •••• 8842</span>
+    </section>
+  </div>
+
+  <!-- ============ FLASH SALE ============ -->
+  <section class="flash-sale" id="flashSale">
+    <div class="section-heading">
+      <h2><span class="flash-icon">⚡</span> Flash Sale</h2>
+      <p class="section-sub" id="flashSub">Diskon terbesar hari ini, selagi stok masih ada.</p>
+    </div>
+    <div class="flash-scroll" id="flashScroll">
+      <div class="skeleton-row">
+        <div class="skeleton-card"></div>
+        <div class="skeleton-card"></div>
+        <div class="skeleton-card"></div>
+        <div class="skeleton-card"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ KATALOG PRODUK ============ -->
+  <section class="catalog-section">
+    <div class="section-heading">
+      <h2>Katalog Produk</h2>
+      <p class="section-sub" id="catalogSub">Semua produk pilihan untuk Anda.</p>
+    </div>
+
+    <div class="state-box" id="loadingState">
+      <div class="spinner"></div>
+      <p>Memuat produk dari server…</p>
+    </div>
+
+    <div class="state-box state-box--error" id="errorState" hidden>
+      <p>Gagal memuat produk. Periksa koneksi Anda dan coba lagi.</p>
+      <button class="retry-btn" id="retryBtn">Coba Lagi</button>
+    </div>
+
+    <div class="state-box" id="emptyState" hidden>
+      <p>Tidak ada produk yang cocok dengan pencarian atau filter Anda.</p>
+    </div>
+
+    <div class="product-grid" id="productGrid"></div>
+  </section>
+
+</main>
+
+<!-- ============ FOOTER (STICKY, TAMPILAN SAJA) ============ -->
+<footer class="bottom-nav">
+  <button class="bottom-nav-item is-active">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 10.5 12 4l8 6.5V19a1 1 0 0 1-1 1h-4.5v-6h-5v6H5a1 1 0 0 1-1-1V10.5Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+    <span>Katalog</span>
+  </button>
+  <button class="bottom-nav-item">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3.5" y="5" width="17" height="14" rx="2" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.6"/><circle cx="16.7" cy="7.3" r="0.9" fill="currentColor"/></svg>
+    <span>Live</span>
+  </button>
+  <button class="bottom-nav-item">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="3.4" stroke="currentColor" stroke-width="1.6"/><path d="M4.5 20c1.2-3.6 4-5.5 7.5-5.5s6.3 1.9 7.5 5.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    <span>Profil</span>
+  </button>
+</footer>
+
+<!-- ============ MODAL DETAIL PRODUK ============ -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="product-modal" id="productModal"></div>
+</div>
+
+<script src="script.js" defer></script>
 </body>
 </html>
