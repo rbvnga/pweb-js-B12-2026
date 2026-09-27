@@ -38,40 +38,26 @@ async function fetchProducts() {
     const loadingState = document.getElementById("loadingState");
     const errorState = document.getElementById("errorState");
 
-    // Tampilkan loading
     loadingState.style.display = "block";
-
-    // Sembunyikan error
     errorState.hidden = true;
 
-    const responses = await Promise.all(
-      CATEGORIES.map(function (cat) {
-        return fetch(`https://dummyjson.com/products/category/${cat}`);
-      }),
-    );
+    // Cukup 1 fetch, ke SEMUA produk (limit=0 = tanpa batas)
+    const response = await fetch("https://dummyjson.com/products?limit=0");
 
-    const dataPerKategori = await Promise.all(
-      responses.map(function (res) {
-        return res.json();
-      }),
-    );
+    if (!response.ok) {
+      throw new Error("Gagal mengambil data produk");
+    }
 
-    allProducts = dataPerKategori.flatMap(function (data) {
-      return data.products;
-    });
+    const data = await response.json();
+    allProducts = data.products; // langsung 194 produk, semua kategori
 
     renderProducts(allProducts);
     renderFlashSale(allProducts);
 
-    // Kalau berhasil, loading hilang
     loadingState.style.display = "none";
   } catch (error) {
     console.error("Gagal memuat produk:", error);
-
-    // Loading hilang
     document.getElementById("loadingState").style.display = "none";
-
-    // Tampilkan pesan error
     document.getElementById("errorState").hidden = false;
   }
 }
@@ -142,9 +128,9 @@ function handleSearch() {
 const debouncedSearch = debounce(handleSearch, 400);
 
 function renderFlashSale(products) {
-  // ambil produk dengan diskon 15% ke atas
+  // ambil produk dengan diskon 90% ke atas
   const flashProducts = products.filter(
-    (product) => product.discountPercentage >= 15,
+    (product) => product.discountPercentage >= 90,
   );
 
   const flashContainer = document.getElementById("flashScroll");
