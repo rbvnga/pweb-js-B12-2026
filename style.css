@@ -1,13 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600;700&display=swap');
+
+:root{
+  --black:     #07080b;
+  --navy-900:  #0b1730;
+  --navy-800:  #101f3d;
+  --navy-700:  #182a4d;
+  --navy-600:  #24365c;
+  --gold:      #cc9d3c;
+  --gold-soft: #e2c579;
+  --gold-dim:  #8a6b2b;
+  --cream:     #f3ecdc;
+  --cream-dim: #cfc4ab;
+  --danger:    #e07a68;
+}
 
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
-    background: linear-gradient(to bottom, #4e25d3, #307ae9, #b21de8);;
+    background:
+      radial-gradient(900px 400px at 20% -10%, rgba(204,157,60,.08), transparent 60%),
+      linear-gradient(to bottom, var(--black), var(--navy-900));
     display: flex;
     justify-content: center;
     align-items: center;
@@ -15,10 +32,11 @@ body {
 }
 
 .login-container {
-    background-color: #ffffff;
+    background: linear-gradient(180deg, var(--navy-800) 0%, var(--navy-900) 100%);
+    border: 1px solid var(--gold-dim);
     padding: 40px;
     border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 20px 45px -18px rgba(0, 0, 0, 0.6);
     width: 100%;
     max-width: 420px;
 }
@@ -29,13 +47,15 @@ body {
 }
 
 .login-header h2 {
-    color: #111111; 
-    font-size: 26px;
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--cream);
+    font-size: 30px;
+    font-weight: 600;
     margin-bottom: 8px;
 }
 
 .login-header p {
-    color: #6b7280;
+    color: var(--cream-dim);
     font-size: 14px;
 }
 
@@ -46,31 +66,38 @@ body {
 .input-group label {
     display: block;
     margin-bottom: 8px;
-    color: #27dedb;
-    font-size: 14px;
+    color: var(--gold-soft);
+    font-size: 13.5px;
     font-weight: 600;
+    letter-spacing: .01em;
 }
 
 .input-group input {
     width: 100%;
     padding: 12px 14px;
-    border: 1px solid #095ede;
+    background: rgba(255,255,255,.04);
+    border: 1px solid var(--navy-600);
     border-radius: 6px;
+    color: var(--cream);
     font-size: 15px;
     outline: none;
     transition: all 0.3s ease;
 }
 
+.input-group input::placeholder{
+    color: var(--cream-dim);
+}
+
 .input-group input:focus {
-    border-color: #9716b1; 
-    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.15);
+    border-color: var(--gold-dim);
+    box-shadow: 0 0 0 3px rgba(204, 157, 60, 0.15);
 }
 
 button {
     width: 100%;
     padding: 14px;
-    background-color: #da1c1c;
-    color: #141b12;
+    background-color: var(--gold);
+    color: var(--black);
     border: none;
     border-radius: 6px;
     font-size: 16px;
@@ -79,36 +106,38 @@ button {
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: background-color 0.2s;
+    transition: filter 0.2s ease, background-color 0.2s ease;
     margin-top: 10px;
 }
 
 button:hover {
-    background-color: #be1689;
+    filter: brightness(1.08);
 }
 
 button:disabled {
-    background-color: #fcd34d;
+    background-color: var(--gold-dim);
+    color: rgba(7,8,11,.7);
     cursor: not-allowed;
+    filter: none;
 }
 
 .error-message {
-    color: #dc2626;
+    color: var(--danger);
     font-size: 14px;
     text-align: center;
     margin-bottom: 15px;
-    display: none; 
+    display: none;
 }
 
 .loader {
-    border: 3px solid rgba(0,0,0,0.1);
-    border-top: 3px solid #111827;
+    border: 3px solid rgba(255,255,255,0.15);
+    border-top: 3px solid var(--black);
     border-radius: 50%;
     width: 18px;
     height: 18px;
     animation: spin 1s linear infinite;
     margin-left: 10px;
-    display: none; 
+    display: none;
 }
 
 @keyframes spin {

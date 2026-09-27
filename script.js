@@ -1,3 +1,4 @@
+
 document.addEventListener('DOMContentLoaded', () => {
   
     const loginForm = document.getElementById('loginForm');
@@ -36,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (validUser) {
                 localStorage.setItem('firstName', validUser.firstName);
-                window.location.href = 'katalog.html'; 
+                window.location.href = 'index.html'; 
             } else {
                 throw new Error('Username atau password yang Anda masukkan salah.');
             }
